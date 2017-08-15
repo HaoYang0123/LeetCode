@@ -14,18 +14,15 @@ public:
         stack<TreeNode*> sta;
         TreeNode* pCurrent = root;
         while(!sta.empty() || pCurrent != NULL) {
-            if(pCurrent != NULL) {
+            while(pCurrent != NULL) {
                 sta.push(pCurrent);
                 pCurrent = pCurrent->left;
             }
-            else {
-                pCurrent = sta.top();
-                sta.pop();
-                res.push_back(pCurrent->val);
-                pCurrent = pCurrent->right;
-            }
+            pCurrent = sta.top();
+            sta.pop();
+            res.push_back(pCurrent->val);
+            pCurrent = pCurrent->right;
         }
         return res;
     }
-
 };
