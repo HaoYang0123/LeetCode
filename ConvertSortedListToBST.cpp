@@ -27,7 +27,7 @@ public:
             fast = fast->next->next;
         }
         TreeNode* res = new TreeNode(slow->val);
-        if(slowPre == NULL) return res;
+        if(slowPre == NULL) return res; //only one node, then return
         slowPre->next = NULL;
         res->left = sortedListToBST(head);
         res->right = sortedListToBST(slow->next);
