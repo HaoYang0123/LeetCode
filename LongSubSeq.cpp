@@ -1,3 +1,21 @@
+/* 
+    HDU 1950 Bridging signals 
+            -----最长上升子序列nlogn算法 
+*/  
+  
+#include<cstdio>  
+#include<cstring>  
+#define MAXN 40005  
+  
+int arr[MAXN],ans[MAXN],len;  
+  
+/*  
+    二分查找。 注意，这个二分查找是求下界的;  (什么是下界？详情见《算法入门经典》 P145) 
+    即返回 >= 所查找对象的第一个位置（想想为什么） 
+ 
+    也可以用STL的lowe_bound二分查找求的下界 
+*/  
+  
 int binary_search(int i){  
     int left,right,mid;  
     left=0,right=len;  
