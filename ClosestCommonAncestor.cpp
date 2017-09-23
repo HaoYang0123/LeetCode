@@ -73,5 +73,6 @@ int main() {
 		fo<<"#"<<t<<" "<<res_index<<" "<<res_count<<endl;
 	}
 	fo.close();
+	fi.close();
 	return 0;
 }
