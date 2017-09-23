@@ -49,5 +49,6 @@ int main() {
 		fo<<"#"<<t<<" "<<res<<endl;
 	}
 	fo.close();
+	fi.close();
 	return 0;
 }
