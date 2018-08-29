@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<string>> res;
+    int m, n;
+    vector<vector<string>> printTree(TreeNode* root) {
+        m = get_height(root);
+        n = pow(2, m) - 1;
+        cout<<m<<"\t"<<n<<endl;
+        res.resize(m);
+        vector<string> tmp(n,"");
+        for(int i = 0; i < m; ++i) res[i] = tmp;
+        dfs(root, 0, 0, n-1);
+        return res;
+    }
+    
+    void dfs(TreeNode* root, int i, int start, int end) { //i表示第i行，start和end表示当前的范围，那么root会放在[start,end]的中间位置
+        //cout<<i<<"\t"<<m<<endl;
+        if (i>=m || root == NULL) return;
+        int mid = (start+end)/2;
+        res[i][mid] = to_string(root->val);
+        dfs(root->left, i+1, start, mid-1);
+        dfs(root->right, i+1, mid+1, end);
+    }
+    
+    int get_height(TreeNode* root) {
+        if (root==NULL) return 0;
+        int left = get_height(root->left), right = get_height(root->right);
+        int h = (left > right ? left : right);
+        return h+1;
+    }
+};
