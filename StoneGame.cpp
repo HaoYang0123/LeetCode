@@ -13,7 +13,7 @@ public:
 	int sum=0;
 	for(int i=0;i<n-1;++i) {
 	    sum+=piles[i];
-	    dp[i][i+1]=max(piles[i],piles[i+1]);
+	    dp[i][i+1]=max(piles[i],piles[i+1]); //dp[i][j]存储的是[i,j]数组，A获得的最大的元素和。
 	}
 	sum+=piles[n-1];
 	//然后计算长度为4，6...,n的情况：
@@ -22,6 +22,6 @@ public:
 	        dp[i][i+l-1]=max(piles[i]+min(dp[i+1][i+l-2],dp[i+2][i+l-1]),piles[i+l-1]+min(dp[i+1][i+l-2],dp[i][i+l-3]));
 	    }
 	}
-	return dp[0][n-1]>(sum-dp[0][n-1]);
+	return dp[0][n-1]>(sum-dp[0][n-1]); //dp[0][n-1]就是A最终获得的最大值，而sum-dp[0][n-1]即为B最终获得的最大值
     }
 };
