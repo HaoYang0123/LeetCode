@@ -7,21 +7,21 @@
 class Solution {
 public:
     bool stoneGame(vector<int>& piles) {
-		int n=piles.size();
+	int n=piles.size();
         vector<vector<int>> dp(n,vector<int>(n,0));
-		//先计算长度为2的情况：
-		int sum=0;
-		for(int i=0;i<n-1;++i) {
-			sum+=piles[i];
-			dp[i][i+1]=max(piles[i],piles[i+1]);
-		}
-		sum+=piles[n-1];
-		//然后计算长度为4，6...,n的情况：
-		for(int l=4;l<=n;l+=2) {
-			for(int i=0;i+l-1<n;++i) {
-				dp[i][i+l-1]=max(piles[i]+min(dp[i+1][i+l-2],dp[i+2][i+l-1]),piles[i+l-1]+min(dp[i+1][i+l-2],dp[i][i+l-3]));
-			}
-		}
-		return dp[0][n-1]>(sum-dp[0][n-1]);
+	//先计算长度为2的情况：
+	int sum=0;
+	for(int i=0;i<n-1;++i) {
+	    sum+=piles[i];
+	    dp[i][i+1]=max(piles[i],piles[i+1]);
+	}
+	sum+=piles[n-1];
+	//然后计算长度为4，6...,n的情况：
+	for(int l=4;l<=n;l+=2) {
+	    for(int i=0;i+l-1<n;++i) {
+	        dp[i][i+l-1]=max(piles[i]+min(dp[i+1][i+l-2],dp[i+2][i+l-1]),piles[i+l-1]+min(dp[i+1][i+l-2],dp[i][i+l-3]));
+	    }
+	}
+	return dp[0][n-1]>(sum-dp[0][n-1]);
     }
 };
