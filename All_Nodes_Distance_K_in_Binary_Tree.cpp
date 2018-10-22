@@ -14,16 +14,16 @@ class Solution {
 public:
     vector<int> distanceK(TreeNode* root, TreeNode* target, int K) {
         vector<TreeNode*> path;
-		    get_path(root, target->val, path);
+	get_path(root, target->val, path);
         //for(int i=0;i<path.size();++i) cout<<path[i]->val<<endl;
         vector<int> res;
-		  for(int i=0;i<path.size();++i) {
-			  if(K-i < 0) break;
-			  if(i==0)
-				  get_res(path[i], NULL, K, res);
-			  else
-				  get_res(path[i], path[i-1], K-i, res);
-		  }
+	for(int i=0;i<path.size();++i) {
+		if(K-i < 0) break;
+		if(i==0)
+			get_res(path[i], NULL, K, res);
+		else
+			get_res(path[i], path[i-1], K-i, res);
+		}
         return res;
     }
 	
