@@ -41,3 +41,18 @@ public:
         return res;
     }
 };
+
+
+//网上O(n)的代码，很简单：
+//比如例子[1,0,2,3,4]，当i=1,arr[i]=0时，max=1，那么max==i，则++res（表示可以i=1这个位置切割，因为arr[:i]最大值为i证明可以切割）。
+class Solution {
+public:
+    int maxChunksToSorted(vector<int>& arr) {
+        int res=0,max=arr[0];
+        for(int i=0;i<arr.size();++i) {
+            max=(max>arr[i]?max:arr[i]);
+            if(max==i) ++res;
+        }
+        return res;
+    }
+};
