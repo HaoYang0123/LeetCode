@@ -5,7 +5,7 @@ class Solution {
 public:
     int minFlipsMonoIncr(string S) {
         int n=S.length();
-        vector<int> dp,one;
+        vector<int> dp,one; //dp和one只存储1的情况。one表示1后面还有多少个0，dp表示1后面这些字符串的结果，那么最终结果就是dp[0]
         int zero_count=0; //0的个数
         for(int i=0;i<S.length();++i) {
             if(S[i] == '0') ++zero_count;
