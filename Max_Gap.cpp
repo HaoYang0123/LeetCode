@@ -15,7 +15,7 @@ public:
             if(nums[i]>max_val) max_val = nums[i];
             if(nums[i]<min_val) min_val = nums[i];
         }
-        if(max_val == min_val) return 0;
+        if(max_val == min_val) return 0; //防止gap=0，导致后面的除0错误
         double gap = (max_val - min_val) * 1.0 / (n-1);
         vector<int> min_bin(n, INT_MAX);
         vector<int> max_bin(n, INT_MIN);
