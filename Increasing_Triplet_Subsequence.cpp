@@ -1,6 +1,7 @@
 //Leetcode 334
 //O(N)的时间复杂度，O(1)的空间复杂度
 
+//方式1：比较复杂
 class Solution {
 public:
     bool increasingTriplet(vector<int>& nums) {
@@ -24,6 +25,26 @@ public:
                     while(!st.empty() && st.top()>=nums[i]) st.pop(); //将st中大于等于nums[i]的出栈
                     st.push(nums[i]); //当前元素入栈
                 }
+            }
+        }
+        return false;
+    }
+};
+
+//方式2：比较简单
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        int num0 = INT_MAX, num1 = INT_MAX;
+        for(int i = 0; i < nums.size(); ++i) {
+            if(nums[i] <= num0) { //nums[i]比1号元素小，则nums[i]作为1号元素
+                num0 = nums[i];
+            }
+            else if(nums[i] <= num1) { //走到else，说明nums[i]比1号元素大，且比之前的2号元素小，则更新为2号元素
+                num1 = nums[i];
+            }
+            else { //如果nums[i]即比1号元素大又比2号元素大，则说明存在解
+                return true;
             }
         }
         return false;
