@@ -3,7 +3,7 @@
 class Solution {
 public:
     vector<double> sampleStats(vector<int>& count) {
-        long long sum=0,mi=INT_MAX,ma=INT_MIN;
+        long long sum=0,mi=INT_MAX,ma=INT_MIN; //一定得使用long long，不然求和int会超过范围
         int mo=-1,mo_count=0;
         vector<int> vv(count.size(),0);
         vv[0] = count[0];
