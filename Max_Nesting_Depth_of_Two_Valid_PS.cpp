@@ -5,6 +5,12 @@
 
 //感觉2次扫描即可，前两次可以做的找对应关系及记录(的值
 
+//最后看答案，有1次扫描的方法（见方法2）：相当于将
+//(()(()))变成：
+//12223321，将奇数的分给A，偶数的分给B
+//变的方法是：level初始为0，当遇到(，则++level；当遇到)，则level--（注：(是先++再赋值，)是先赋值再--，这样相同值的(和)能够对应得上
+
+//方法1：
 class Solution {
 public:
     unordered_map<int, int> m1, m2; //m1和m2分别记录左和右括号的对应关系
@@ -65,5 +71,22 @@ public:
         dp[i] = max_v+1;
         final_max = max(final_max, max_v+1);
         return max_v+1;
+    }
+};
+
+//方法2：
+class Solution {
+public:
+    vector<int> maxDepthAfterSplit(string seq) {
+        int n=seq.length();
+        vector<int> res(n, 0);
+        int level=0;
+        for(int i=0;i<n;++i) {
+            if(seq[i]=='(') 
+                res[i] = (++level % 2);
+            else 
+                res[i] = (level-- % 2);
+        }
+        return res;
     }
 };
