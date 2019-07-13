@@ -1,4 +1,5 @@
 //Leetcode 56
+//interval的start从小到大排序，然后从左到右扫描，判断如果interval[i][1]>=interval[i+1][0]，则将[i+1]与[i]合并
 
 bool cmp(const vector<int> & a, const vector<int> & b) {
     if(a[0]==b[0]) return a[1]<b[1];
