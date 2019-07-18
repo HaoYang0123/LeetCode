@@ -1,0 +1,18 @@
+//Leetcode 260
+
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        int sum=0; //sum等于x^y，x和y是两个只出现1次的数
+        for(int i=0;i<nums.size();++i) {
+            sum ^= nums[i];
+        }
+        int flag = (sum & ~(sum-1)); //flag表示x与y的某位（bit）不相同
+        vector<int> res(2,0); //根据flag（某位为1，x与y不同的位），将x和y分开
+        for(int i=0;i<nums.size();++i) {
+            if(flag&nums[i]) res[0] ^= nums[i];
+            else res[1] ^= nums[i];
+        }
+        return res;
+    }
+};
