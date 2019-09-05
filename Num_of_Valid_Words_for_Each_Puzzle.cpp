@@ -88,7 +88,7 @@ public:
                 }
                 
                 // Only select valid bits i.e. bits corresponding to chars in puzzle
-                subMask = (subMask - 1) & mask;
+                subMask = (subMask - 1) & mask; //枚举mask位数为1的情况，比如"111"有八种情况：2^3=8
             }
         }
         
