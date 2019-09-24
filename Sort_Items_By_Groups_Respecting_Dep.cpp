@@ -1,5 +1,5 @@
 //Leetcode 1203
-//两层图的拓扑排序算法，但最后一个案例超时了
+//两层图的拓扑排序算法
 
 class Solution {
 public:
@@ -66,11 +66,13 @@ public:
     
     unordered_map<int, vector<int>> tp_sort(unordered_set<int> & group_ids, vector<int> & group, vector<vector<int>> & in_edges, vector<vector<int>> & out_edges) {
         unordered_map<int, vector<int>> gid2res; //group_id对应的结果
+        unordered_map<int, vector<int>> gid2nodeids; //group_id对应的结点ids
+        for(int i=0;i<group.size();++i) gid2nodeids[group[i]].push_back(i);
         for(auto ind = group_ids.begin(); ind != group_ids.end(); ++ind) {
             int group_id = *ind;
             if(group_id == -1) continue;
             queue<int> zero_ins;
-            unordered_map<int, int> in_degree = get_in_degree(group_id, group, in_edges, zero_ins);
+            unordered_map<int, int> in_degree = get_in_degree(gid2nodeids[group_id], in_edges, zero_ins);
             //cout<<group_id<<"\t"<<zero_ins.size()<<endl;
             vector<int> one_group_res;
             while(!zero_ins.empty()) {
@@ -92,12 +94,12 @@ public:
         return gid2res;
     }
     
-    unordered_map<int, int> get_in_degree(int group_id, vector<int> & group, vector<vector<int>> & in_edges, queue<int> & zero_ins) {
+    unordered_map<int, int> get_in_degree(vector<int> & node_ids, vector<vector<int>> & in_edges, queue<int> & zero_ins) {
         unordered_map<int, int> in;
-        for(int i=0;i<group.size();++i) {
-            if(group[i] != group_id) continue;
-            in[i] = in_edges[i].size();
-            if(in[i] == 0) zero_ins.push(i);
+        for(int i=0;i<node_ids.size();++i) {
+            int node_id = node_ids[i];
+            in[node_id] = in_edges[node_id].size();
+            if(in[node_id] == 0) zero_ins.push(node_id);
         }
         return in;
     }
