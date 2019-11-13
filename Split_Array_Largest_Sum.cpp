@@ -25,7 +25,8 @@ public:
 		if(dp[start][end][m] != LLONG_MAX) return dp[start][end][m];
 		long long res = LLONG_MAX;
 		for(int i=start+1;i<=end+2-m;++i) { //
-			long long cur = max(dfs(dp, start, i-1, 1), dfs(dp, i, end, m-1));
+			if(dp[start][i-1][1] >= res) continue;
+			long long cur = max(dp[start][i-1][1], dfs(dp, i, end, m-1));
 			res = min(res, cur);
 		}
 		dp[start][end][m] = res;
