@@ -12,15 +12,15 @@ public:
 		for(int i=1;i<n;++i) {
 			int cur_remainder = nums[i] % 3; //当前元素的余数
 			dp[i][cur_remainder] = dp2[i-1][0] + nums[i];
-			dp2[i][cur_remainder] = dp[i][cur_remainder];
-			for(int j=0;j<3;++j) { //之前求和的余数
+			dp2[i][cur_remainder] = max(dp2[i-1][cur_remainder], dp[i][cur_remainder]);
+			for(int j=1;j<3;++j) { //之前求和的余数
 				int new_remainder = (j+cur_remainder) % 3;
 				if(dp2[i-1][j] > 0) {
-					dp[i][new_remainder] = max(dp[i][new_remainder], dp2[i-1][j] + nums[i]);
-					dp2[i][new_remainder] = max(dp2[i][new_remainder], max(dp2[i-1][new_remainder], dp[i][new_remainder]));
+					dp[i][new_remainder] = dp2[i-1][j] + nums[i];
+					dp2[i][new_remainder] = max(dp2[i-1][new_remainder], dp[i][new_remainder]);
 				}
 				else {
-					dp2[i][new_remainder] = max(dp2[i][new_remainder], dp2[i-1][new_remainder]);
+					dp2[i][new_remainder] = dp2[i-1][new_remainder];
 				}
 			}
 		}
