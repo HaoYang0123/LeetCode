@@ -6,6 +6,7 @@
 //1）向后面继续找是不是有满足条件的，将nums[j]与nums[i]或者nums[i+1]交换
 //2）如果没找到，则需要向前面找
 
+//方法1：（自己的代码）
 class Solution {
 public:
 	void wiggleSort(vector<int> & nums) {
@@ -79,4 +80,29 @@ public:
 			}
 		}
 	}
+};
+
+//方法2：（网上的代码），但是时间复杂度是O(NlogN)（因为排序了），空间复杂度O(N）（因为开了两个数组分别存储排序后的nums的前半部分和后半部分）
+class Solution {
+public:
+    void wiggleSort(vector<int>& nums) {
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        vector<int> v1, v2; //v1和v2分别存储排序后的nums前半部分和后半部分
+		//注：当n为奇数时，nums中间那个数字即存在v1中也存在v2中
+        for(int i = 0; i < (n>>1) + (n&1); i++)v1.push_back(nums[i]);
+        for(int i = (n>>1); i < n; i++)v2.push_back(nums[i]);
+        reverse(v1.begin(), v1.end());
+        reverse(v2.begin(), v2.end());
+        
+        int s1 = 0, s2 = 0; //将v1（即nums前半部分）放到奇数部分，将v2（即nums后半部分）放到偶数部分
+		//由于一定有解，那么v1最后1个数一定小于v2最后1个数
+		//并且，v1倒数第2个数一定也小于v2最后1个数，且也小于v2倒数第2个数
+        for(int i= 0; i < n; i++){
+            if(i&1){
+                nums[i] = v2[s2++];
+            }
+            else nums[i] = v1[s1++];
+        }
+    }
 };
