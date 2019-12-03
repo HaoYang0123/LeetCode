@@ -1,5 +1,6 @@
 //Leetcode 1278
-//O(N^4)时间复杂度
+//O(N^3*K)时间复杂度
+//=> O(N^2*K)时间复杂度， i的for循环可以去掉，只用计算dp[0][j]的情况
 
 class Solution {
 public:
@@ -17,7 +18,7 @@ public:
 				dp[i][j][1] = par_num;
 			}
 		}
-		for(int i=0;i<n;++i) {
+		for(int i=0;i<n;++i) { // ====> for(int i=0;i<1;++i)
 			for(int j=i+1;j<n;++j) {
 				for(int p=2;p<=min(k, j-i+1);++p) {
 					int min_res = INT_MAX;
