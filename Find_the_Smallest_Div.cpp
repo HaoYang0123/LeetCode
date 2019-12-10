@@ -1,15 +1,15 @@
 //Leetcode 1283
-//O(NlogSum)的时间复杂度
+//O(Nlog(Max))的时间复杂度
 
 class Solution {
 public:
     int smallestDivisor(vector<int>& nums, int threshold) {
         long long start=1, end=0, res = INT_MAX;
-        for(int i=0;i<nums.size();++i) end += (long long)nums[i];
+        for(int i=0;i<nums.size();++i) end = max(end, (long long)nums[i]);
         while(start<=end) {
             long long mid = start + (end-start)/2;
-            long long div_res = get_res(nums, mid);
-            if(div_res <= threshold) {
+            bool div_flag = get_res(nums, mid, threshold);
+            if(div_flag) {
                 res = min(res, mid);
                 end = mid - 1;
             }
@@ -18,11 +18,14 @@ public:
         return res;
     }
     
-    long long get_res(vector<int> & nums, int div) {
+    bool get_res(vector<int> & nums, int div, int t) {
         long long res = 0;
         for(int i=0;i<nums.size();++i) {
             res += ((long long)nums[i]-1) / div + 1;
+            if(res > t) {
+                return false;
+            }
         }
-        return res;
+        return true;
     }
 };
