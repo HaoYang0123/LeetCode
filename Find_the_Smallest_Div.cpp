@@ -4,10 +4,10 @@
 class Solution {
 public:
     int smallestDivisor(vector<int>& nums, int threshold) {
-        long long start=1, end=0, res = INT_MAX;
-        for(int i=0;i<nums.size();++i) end = max(end, (long long)nums[i]);
+        int start=1, end=0, res = INT_MAX;
+        for(int i=0;i<nums.size();++i) end = max(end, nums[i]);
         while(start<=end) {
-            long long mid = start + (end-start)/2;
+            int mid = start + (end-start)/2;
             bool div_flag = get_res(nums, mid, threshold);
             if(div_flag) {
                 res = min(res, mid);
@@ -18,10 +18,10 @@ public:
         return res;
     }
     
-    bool get_res(vector<int> & nums, int div, int t) {
-        long long res = 0;
+    inline bool get_res(vector<int> & nums, int div, int t) {
+        int res = 0;
         for(int i=0;i<nums.size();++i) {
-            res += ((long long)nums[i]-1) / div + 1;
+            res += (nums[i]-1) / div + 1;
             if(res > t) {
                 return false;
             }
