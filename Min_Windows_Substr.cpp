@@ -1,6 +1,7 @@
 //Leetcode 76
 //代码写得有些乱，特别是对于find_len函数，需要找最小和最大位置，应该之前保存一下最好。
 
+//一年前写的代码：
 class Solution {
 public:
     string minWindow(string s, string t) {
@@ -81,4 +82,52 @@ public:
         }
         vec[min_ind] = newIndex;
     }
+};
+
+//重新写了一份，代码思路清楚一些
+class Solution {
+public:
+	string minWindow(string s, string t) {
+		unordered_map<char,int> c2n; //t中各字符出现的次数
+		for(int i=0;i<t.length();++i) c2n[t[i]]++;
+		int start=0,end=0;
+		int res = INT_MAX, res_s=-1, res_e=-1;
+		while(end<s.length()) {
+			auto ind = c2n.find(s[end]);
+			if(ind == c2n.end()) {
+				++end;
+				continue;
+			}
+			--c2n[s[end]];
+			++end;
+			bool flag = is_ok(c2n);
+			if(flag) { //当前成功了，则需要调整start
+				while(start<end) {
+					auto ind2 = c2n.find(s[start]);
+					if(ind2 == c2n.end()) {
+						++start;
+						continue;
+					}
+					++c2n[s[start]];
+					++start;
+					if(!is_ok(c2n)) break; //只有当start字符使得c2n不满足要求时退出
+				}
+				int cur_len = end-start; //当前的[start-1,end-1]为满足要求的子字符串
+				if(res > cur_len) {
+					res = cur_len;
+					res_s = start-1;
+					res_e = end-1;
+				}
+			}
+		}
+		if(res == INT_MAX) return "";
+		return s.substr(res_s, (res_e - res_s + 1));
+	}
+	
+	inline bool is_ok(unordered_map<char,int> & c2n) {
+		for(auto ind = c2n.begin(); ind != c2n.end(); ++ind) {
+			if(ind->second > 0) return false;
+		}
+		return true;
+	}
 };
