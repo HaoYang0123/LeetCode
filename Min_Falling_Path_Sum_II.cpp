@@ -1,4 +1,5 @@
 //Leetcode 1289
+//时间复杂度为O(N^3)
 
 class Solution {
 public:
