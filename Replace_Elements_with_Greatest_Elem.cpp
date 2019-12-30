@@ -1,5 +1,21 @@
 //Leetcode 1299
 
+//方法1：从右往左扫描，记录当前最大值
+class Solution {
+public:
+	vector<int> replaceElements(vector<int> & arr) {
+		int n = arr.size();
+		vector<int> res(n, -1);
+		int max_v = arr[n-1];
+		for(int i=n-2;i>=0;--i) {
+			res[i] = max_v;
+			max_v = max(max_v, arr[i]);
+		}
+		return res;
+	}
+};
+
+//方法2：使用map记录各值对应的位置
 class Solution {
 public:
 	vector<int> replaceElements(vector<int> & arr) {
