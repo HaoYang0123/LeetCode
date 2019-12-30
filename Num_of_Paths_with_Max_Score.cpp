@@ -1,6 +1,42 @@
 //Leetcode 1301
 //动态规划：dp[i][j] = max(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])+board[i][j]
 
+//方法1：直接两个for循环的动态规划（时间更短）
+class Solution {
+public:
+	int MOD;
+	vector<int> pathsWithMaxScore(vector<string> & board) {
+		MOD = 1000000007;
+		int n=board.size();
+		vector<vector<vector<long long>>> dp(n+1, vector<vector<long long>>(n+1, vector<long long>(2,INT_MIN))); //dp[i][j]表示从(i,j)走到(0,0)的最大获利值及路径数量
+		dp[1][1][0] = 0;
+		dp[1][1][1] = 1;
+		for(int i=1;i<=n;++i) {
+			for(int j=1;j<=n;++j) {
+				if(i==1&&j==1) continue;
+				if(board[i-1][j-1] == 'X') continue;
+				dp[i][j][0] = max(dp[i-1][j-1][0], max(dp[i-1][j][0], dp[i][j-1][0]));
+				if(dp[i][j][0] != INT_MIN) {
+					dp[i][j][1] = 0;
+					dp[i][j][1] += dp[i-1][j-1][0] == dp[i][j][0] ? dp[i-1][j-1][1] : 0;
+					dp[i][j][1] = dp[i][j][1] % MOD;
+					dp[i][j][1] += dp[i-1][j][0] == dp[i][j][0] ? dp[i-1][j][1] : 0;
+					dp[i][j][1] = dp[i][j][1] % MOD;
+					dp[i][j][1] += dp[i][j-1][0] == dp[i][j][0] ? dp[i][j-1][1] : 0;
+					dp[i][j][1] = dp[i][j][1] % MOD;
+					dp[i][j][0] += board[i-1][j-1] != 'S' ? int(board[i-1][j-1]-'0') : 0;
+				}
+				else {
+					dp[i][j][1] = 0;
+				}
+			}
+		}
+		vector<int> res(2,0); res[0] = dp[n][n][0] == INT_MIN ? 0 : dp[n][n][0]; res[1] = dp[n][n][1];
+		return res;
+	}
+};
+
+//方法2：使用递归来求解，递归中使用动态规划记录中间的值
 class Solution {
 public:
 	int MOD;
