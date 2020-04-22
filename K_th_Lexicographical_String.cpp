@@ -7,6 +7,7 @@ class Solution {
 public:
     string getHappyString(int n, int k) {
         int num = pow(2, n-1);
+        if(k > 3*num) return ""; //超过了最大的happyString数量
         string res = string(1, 'a' + (k-1) / num); //k<=num，则为a，k<=2*num，则为b，否则为c
         while (num > 1) {
             k -= num * ((k - 1) / num);
