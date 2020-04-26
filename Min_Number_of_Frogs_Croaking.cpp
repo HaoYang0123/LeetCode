@@ -30,7 +30,7 @@ public:
                 --knum;
             }
         }
-        if(cnum == 0) return res;
-        return -1;
+        if(cnum > 0) return -1; //注意：得判断cnum>0，也即不能出现cnum>rnum>...>knum情况出现，比如: ccroak这种情况
+        return res;
     }
 };
