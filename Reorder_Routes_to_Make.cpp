@@ -21,7 +21,7 @@ public:
             int cur = qs.front();
             qs.pop();
             vector<int> & can_go = graph[cur];
-            vector<int> & cur_flag =flag[cur];
+            vector<int> & cur_flag = flag[cur];
             for(int i=0;i<can_go.size();++i) {
                 if(is_vis[can_go[i]]) continue; //如果结点已经访问，则不需要再访问
                 is_vis[can_go[i]] = true;
