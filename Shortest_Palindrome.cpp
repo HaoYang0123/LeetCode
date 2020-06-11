@@ -1,6 +1,36 @@
 //Leetcode 214
 //Manacher算法找最长回文串
 
+//最近看了一下KMP，重新用KMP思路实现了一遍
+class Solution {
+public:
+    string shortestPalindrome(string s) {
+        string revs = s;
+        reverse(revs.begin(), revs.end());
+        string new_s = s + "#" + revs;
+        vector<int> pattern(new_s.length(), 0);
+        get_pattern(new_s, pattern);
+        int max_len = pattern[new_s.length()-1];
+        int ori_len = s.length();
+        if(max_len == ori_len) return s; //说明s本身就是回文串
+        string need_str = s.substr(max_len, ori_len-max_len);
+        reverse(need_str.begin(), need_str.end());
+        return need_str + s;
+    }
+    
+    //KMP算法思路，给定字符串str，计算pattern[i]为str[0...i]的最长的、相等的前缀和后缀子串
+    void get_pattern(string & str, vector<int> & pattern) {
+        int cur_max_len = 0;
+        for(int i=1;i<str.length();++i) {
+            while(cur_max_len > 0 && str[cur_max_len] != str[i]) 
+                cur_max_len = pattern[cur_max_len-1];
+            if(str[cur_max_len] == str[i]) ++cur_max_len;
+            pattern[i] = cur_max_len;
+        }
+    }
+};
+
+//好早之前写过的算法
 class Solution {
 public:
     string shortestPalindrome(string s) {
