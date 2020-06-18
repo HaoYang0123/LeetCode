@@ -64,3 +64,41 @@ public:
         }
     }
 };
+
+
+//在网上找了一下：二分查找，找到最小的天min和最大的天max，然后取中值mid，如果中值得到的不满足条件，则答案在[mid+1, max]中
+//如果满足条件，则答案在[min,mid]中
+class Solution {
+public:
+    int minDays(vector<int>& bloomDay, int m, int k) {
+        if(m * k > bloomDay.size()) return -1; //总的花的数量比m*k要小，则不可能满足条件
+        int min_day = INT_MAX, max_day = INT_MIN;
+        for(int i=0;i<bloomDay.size();++i) {
+            if(bloomDay[i] < min_day) min_day = bloomDay[i];
+            if(bloomDay[i] > max_day) max_day = bloomDay[i];
+        }
+        while(min_day < max_day) {
+            int mid = min_day + (max_day - min_day) / 2;
+            if(is_ok(bloomDay, mid, m, k)) {
+                max_day = mid;
+            }
+            else min_day = mid+1;
+        }
+        return min_day;
+    }
+    
+    bool is_ok(vector<int> & bloomDay, int mid, int m, int k) {
+        int cnt = 0;
+        int cur_m = 0;
+        for(int i=0;i<bloomDay.size();++i) {
+            if(bloomDay[i] <= mid) ++cnt;
+            else {
+                cur_m += cnt / k;
+                if(cur_m >= m) return true;
+                cnt = 0;
+            }
+        }
+        cur_m += cnt / k;
+        return cur_m >= m;
+    }
+};
