@@ -1,4 +1,5 @@
 // Leetcode 2226
+// 二分查找
 
 class Solution {
 public:
